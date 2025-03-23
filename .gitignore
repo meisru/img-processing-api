@@ -1,0 +1,8 @@
+projectNotes.txt
+
+dist/
+spec/
+src/routes
+src/utilities/middleware.ts
+
+node_modules
