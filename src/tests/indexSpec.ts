@@ -1,12 +1,27 @@
-import resizeImage from "../utilities/resizeImage";
 import request from "supertest";
 import app from "../index";
 
 describe("test endpoint response", function () {
-  it("gets the api/images endpoint", function () {
-    expect(() => {
-      fetch("http://localhost:3000/api/image");
-    }).not.toThrowError();
+  it("gets the / endpoint", async (): Promise<void> => {
+    const response = await request(app).get("/");
+    expect(response.status).toBe(200);
+  });
+
+  it("gets the /api endpoint", async (): Promise<void> => {
+    const response = await request(app).get("/api");
+    expect(response.status).toBe(200);
+  });
+
+  it("gets the /api/images endpoint with valid parameters", async () => {
+    const response = await request(app).get(
+      "/api/image?filename=santamonica&width=100&height=100"
+    );
+    expect(response.status).toBe(200);
+  });
+
+  it("should return 404 status for non-existing filename", async () => {
+    const response = await request(app).get("/api/image?filename=nonexisting");
+    expect(response.status).toBe(404);
   });
 
   it("should return 400 status for invalid filename", async () => {
@@ -29,16 +44,5 @@ describe("test endpoint response", function () {
     );
     expect(response.status).toBe(400);
     expect(response.text).toBe("<h1>Please enter a valid height</h1>");
-  });
-});
-
-describe("image resize function", function () {
-  it("should resolve successfully", async function () {
-    const result = await resizeImage("santamonica", 100, 100);
-    expect(result).toBe("Image resized successfully");
-  });
-
-  it("should reject when dimensions are invalid", async function () {
-    resizeImage("santamonica", -100, -100);
   });
 });
