@@ -40,6 +40,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sharp_1 = __importDefault(require("sharp"));
+/**
+ * Process image via sharp
+ * @param {string}  filename - The filename of the image
+ * @param {number}  width - The width of the image
+ * @param {number}  height - The height of the image
+ * @returns {Promise<string>} - The result of the image processing
+ */
 var resizeImage = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var err_1;
     return __generator(this, function (_a) {
@@ -54,7 +61,6 @@ var resizeImage = function (filename, width, height) { return __awaiter(void 0, 
                 return [2 /*return*/, "Image resized successfully"];
             case 2:
                 err_1 = _a.sent();
-                console.error(err_1);
                 throw new Error("Error resizing image");
             case 3: return [2 /*return*/];
         }

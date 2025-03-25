@@ -23,7 +23,7 @@ const validate = async (
 
   // check if filename is provided
   if (!filename) {
-    res.status(400).send("filename is required");
+    res.status(400).send("<h1>Filename is required</h1>");
     return;
   }
 
@@ -34,22 +34,22 @@ const validate = async (
     );
     // if width and height are not provided, serve the original image
     if (!width && !height) {
-      res.setHeader("Content-Type", "image/jpeg");
+      res.contentType('image/jpg');
       res.status(200).send(image);
       return;
     }
   } catch (err) {
-    res.status(404).send("no such file or directory");
+    res.status(404).send("<h1>No such file or directory</h1>");
     return;
   }
 
   // check if width and height are valid
   if (!width || isNaN(width) || width <= 0) {
-    res.status(400).send("please enter a valid width");
+    res.status(400).send("<h1>Please enter a valid width</h1>");
     return;
   }
   if (!height || isNaN(height) || height <= 0) {
-    res.status(400).send("please enter a valid height");
+    res.status(400).send("<h1>Please enter a valid height</h1>");
     return;
   }
 

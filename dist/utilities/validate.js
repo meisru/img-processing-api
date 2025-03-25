@@ -39,44 +39,67 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
+exports.requestCache = exports.validate = void 0;
 var fs_1 = require("fs");
 var path_1 = __importDefault(require("path"));
-var resizeImage_1 = __importDefault(require("../../utilities/resizeImage"));
-var validate_1 = require("../../utilities/validate");
-var imgRouter = express_1.default.Router();
-// Process the image
-imgRouter.get("/", validate_1.validate, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filename, width, height, image, err_1;
+// to store previous requests
+var requestCache = new Map();
+exports.requestCache = requestCache;
+/**
+ * to validate the request and check if the image is already processed
+ * @param req
+ * @param res
+ * @param next
+ * @returns  {void}
+ */
+var validate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var filename, width, height, image, err_1, key;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 filename = req.query.filename;
                 width = parseInt(req.query.width);
                 height = parseInt(req.query.height);
+                // check if filename is provided
+                if (!filename) {
+                    res.status(400).send("filename is required");
+                    return [2 /*return*/];
+                }
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, (0, resizeImage_1.default)(filename, width, height)];
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, fs_1.promises.readFile(path_1.default.join(__dirname, "../../assets/full/".concat(filename, ".jpg")))];
             case 2:
-                _a.sent();
-                return [4 /*yield*/, fs_1.promises.readFile(path_1.default.join(__dirname, "../../../assets/thumb/".concat(filename, "_thumb.jpg")))];
-            case 3:
                 image = _a.sent();
-                // store the processed image in cache
-                validate_1.requestCache.set("".concat(filename, "_").concat(width, "_").concat(height), image);
-                // send the image as response
-                res.setHeader("Content-Type", "image/jpeg");
-                res.status(200).send(image);
-                return [3 /*break*/, 5];
-            case 4:
+                // if width and height are not provided, serve the original image
+                if (!width && !height) {
+                    res.setHeader("Content-Type", "image/jpeg");
+                    res.status(200).send(image);
+                    return [2 /*return*/];
+                }
+                return [3 /*break*/, 4];
+            case 3:
                 err_1 = _a.sent();
-                // error handling
-                console.error(err_1);
-                res.status(500).send("Error processing image");
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
+                res.status(404).send("no such file or directory");
+                return [2 /*return*/];
+            case 4:
+                // check if width and height are valid
+                if (!width || isNaN(width) || width <= 0) {
+                    res.status(400).send("please enter a valid width");
+                    return [2 /*return*/];
+                }
+                if (!height || isNaN(height) || height <= 0) {
+                    res.status(400).send("please enter a valid height");
+                    return [2 /*return*/];
+                }
+                key = "".concat(filename, "_").concat(width, "_").concat(height);
+                if (requestCache.has(key)) {
+                    res.status(200).send(requestCache.get(key));
+                    return [2 /*return*/];
+                }
+                next();
+                return [2 /*return*/];
         }
     });
-}); });
-exports.default = imgRouter;
+}); };
+exports.validate = validate;

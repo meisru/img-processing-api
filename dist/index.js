@@ -11,7 +11,7 @@ app.listen(port, function () {
     console.log("Server listening at http://localhost:".concat(port));
 });
 app.get("/", function (req, res) {
-    res.send("main");
+    res.send('<h1><a href="/api">View the project</a><h1>');
 });
 app.use("/api", index_1.default);
 exports.default = app;
