@@ -1,12 +1,31 @@
-import { defineConfig } from "eslint/config";
-import globals from "globals";
-import js from "@eslint/js";
-import tseslint from "typescript-eslint";
+// eslint.config.mjs
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsparser from "@typescript-eslint/parser";
+import prettierPlugin from "eslint-plugin-prettier";
+import prettierConfig from "eslint-config-prettier";
 
+export default [
+  {
+    files: ["**/*.ts"],
 
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { files: ["**/*.{js,mjs,cjs,ts}"], languageOptions: { globals: globals.browser } },
-  { files: ["**/*.{js,mjs,cjs,ts}"], plugins: { js }, extends: ["js/recommended"] },
-  tseslint.configs.recommended,
-]);
+    languageOptions: {
+      parser: tsparser,
+      sourceType: "module",
+    },
+
+    plugins: {
+      "@typescript-eslint": tseslint,
+      prettier: prettierPlugin,
+    },
+
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      ...prettierConfig.rules,
+      "@typescript-eslint/no-unused-vars": "warn",
+      "no-console": "warn",
+      semi: ["error", "always"],
+      quotes: ["error", "double"],
+      "prettier/prettier": "error",
+    },
+  },
+];
