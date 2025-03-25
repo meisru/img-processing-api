@@ -62,7 +62,7 @@ var validate = function (req, res, next) { return __awaiter(void 0, void 0, void
                 height = parseInt(req.query.height);
                 // check if filename is provided
                 if (!filename) {
-                    res.status(400).send("filename is required");
+                    res.status(400).send("<h1>Filename is required</h1>");
                     return [2 /*return*/];
                 }
                 _a.label = 1;
@@ -73,23 +73,25 @@ var validate = function (req, res, next) { return __awaiter(void 0, void 0, void
                 image = _a.sent();
                 // if width and height are not provided, serve the original image
                 if (!width && !height) {
-                    res.setHeader("Content-Type", "image/jpeg");
+                    res.contentType("image/jpg");
                     res.status(200).send(image);
                     return [2 /*return*/];
                 }
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
-                res.status(404).send("no such file or directory");
+                res
+                    .status(404)
+                    .send("<h1>No such file or directory</h1>".concat(err_1.message));
                 return [2 /*return*/];
             case 4:
                 // check if width and height are valid
                 if (!width || isNaN(width) || width <= 0) {
-                    res.status(400).send("please enter a valid width");
+                    res.status(400).send("<h1>Please enter a valid width</h1>");
                     return [2 /*return*/];
                 }
                 if (!height || isNaN(height) || height <= 0) {
-                    res.status(400).send("please enter a valid height");
+                    res.status(400).send("<h1>Please enter a valid height</h1>");
                     return [2 /*return*/];
                 }
                 key = "".concat(filename, "_").concat(width, "_").concat(height);

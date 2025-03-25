@@ -71,9 +71,7 @@ imgRouter.get("/", validate_1.validate, function (req, res) { return __awaiter(v
                 return [3 /*break*/, 5];
             case 4:
                 err_1 = _a.sent();
-                // error handling
-                console.error(err_1);
-                res.status(500).send("Error processing image");
+                res.status(500).send("Error processing image: ".concat(err_1.message));
                 return [3 /*break*/, 5];
             case 5: return [2 /*return*/];
         }

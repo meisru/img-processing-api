@@ -14,7 +14,7 @@ const resizeImage = async (filename: string, width: number, height: number) => {
       .toFile(`assets/thumb/${filename}_thumb.jpg`);
     return "Image resized successfully";
   } catch (err) {
-    throw new Error("Error resizing image");
+    throw new Error(`Error resizing image: ${(err as Error).message}`);
   }
 };
 

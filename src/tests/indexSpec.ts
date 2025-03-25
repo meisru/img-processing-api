@@ -12,7 +12,7 @@ describe("test endpoint response", function () {
   it("should return 400 status for invalid filename", async () => {
     const response = await request(app).get("/api/image?width=100&height=100");
     expect(response.status).toBe(400);
-    expect(response.text).toBe("filename is required");
+    expect(response.text).toBe("<h1>Filename is required</h1>");
   });
 
   it("should return 400 status for invalid width", async () => {
@@ -20,15 +20,15 @@ describe("test endpoint response", function () {
       "/api/image?filename=santamonica&height=100"
     );
     expect(response.status).toBe(400);
-    expect(response.text).toBe("please enter a valid width");
+    expect(response.text).toBe("<h1>Please enter a valid width</h1>");
   });
 
   it("should return 400 status for invalid height", async () => {
     const response = await request(app).get(
-      "/api/image?filename=santamonica&height=100"
+      "/api/image?filename=santamonica&width=100"
     );
     expect(response.status).toBe(400);
-    expect(response.text).toBe("please enter a valid width");
+    expect(response.text).toBe("<h1>Please enter a valid height</h1>");
   });
 });
 

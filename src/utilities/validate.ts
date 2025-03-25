@@ -34,12 +34,14 @@ const validate = async (
     );
     // if width and height are not provided, serve the original image
     if (!width && !height) {
-      res.contentType('image/jpg');
+      res.contentType("image/jpg");
       res.status(200).send(image);
       return;
     }
   } catch (err) {
-    res.status(404).send("<h1>No such file or directory</h1>");
+    res
+      .status(404)
+      .send(`<h1>No such file or directory</h1>${(err as Error).message}`);
     return;
   }
 

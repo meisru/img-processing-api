@@ -57,7 +57,7 @@ describe("test endpoint response", function () {
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(400);
-                    expect(response.text).toBe("filename is required");
+                    expect(response.text).toBe("<h1>Filename is required</h1>");
                     return [2 /*return*/];
             }
         });
@@ -70,7 +70,7 @@ describe("test endpoint response", function () {
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(400);
-                    expect(response.text).toBe("please enter a valid width");
+                    expect(response.text).toBe("<h1>Please enter a valid width</h1>");
                     return [2 /*return*/];
             }
         });
@@ -79,11 +79,11 @@ describe("test endpoint response", function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, supertest_1.default)(index_1.default).get("/api/image?filename=santamonica&height=100")];
+                case 0: return [4 /*yield*/, (0, supertest_1.default)(index_1.default).get("/api/image?filename=santamonica&width=100")];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(400);
-                    expect(response.text).toBe("please enter a valid width");
+                    expect(response.text).toBe("<h1>Please enter a valid height</h1>");
                     return [2 /*return*/];
             }
         });

@@ -26,9 +26,7 @@ imgRouter.get("/", validate, async (req, res) => {
     res.setHeader("Content-Type", "image/jpeg");
     res.status(200).send(image);
   } catch (err) {
-    // error handling
-    console.error(err);
-    res.status(500).send("Error processing image");
+    res.status(500).send(`Error processing image: ${(err as Error).message}`);
   }
 });
 

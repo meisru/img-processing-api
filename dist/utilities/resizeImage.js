@@ -61,7 +61,7 @@ var resizeImage = function (filename, width, height) { return __awaiter(void 0, 
                 return [2 /*return*/, "Image resized successfully"];
             case 2:
                 err_1 = _a.sent();
-                throw new Error("Error resizing image");
+                throw new Error("Error resizing image: ".concat(err_1.message));
             case 3: return [2 /*return*/];
         }
     });
