@@ -45,7 +45,7 @@ var sharp_1 = __importDefault(require("sharp"));
  * @param {string}  filename - The filename of the image
  * @param {number}  width - The width of the image
  * @param {number}  height - The height of the image
- * @returns {Promise<string>} - The result of the image processing
+ * @returns {Promise<string>} - The path to the processed image
  */
 var resizeImage = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
     var outputPath, err_1;
@@ -61,7 +61,7 @@ var resizeImage = function (filename, width, height) { return __awaiter(void 0, 
                         .toFile(outputPath)];
             case 2:
                 _a.sent();
-                return [2 /*return*/, outputPath]; // ✅ Return the actual file path instead of a message
+                return [2 /*return*/, outputPath];
             case 3:
                 err_1 = _a.sent();
                 throw new Error("Error resizing image: ".concat(err_1.message));
