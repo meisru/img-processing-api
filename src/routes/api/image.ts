@@ -2,12 +2,15 @@ import express from "express";
 import { promises as fs } from "fs";
 import path from "path";
 import resizeImage from "../../utilities/resizeImage";
-import { validate, requestCache } from "../../utilities/validate";
+import validate from "../../middlewares/validateRequest";
+import caching from "../../middlewares/caching";
 
 const imgRouter = express.Router();
 
+// imgRouter.get('/', validate, caching, resize);
+
 // Process the image
-imgRouter.get("/", validate, async (req, res) => {
+imgRouter.get("/", validate, caching, async (req, res) => {
   const filename = req.query.filename as string;
   const width = parseInt(req.query.width as string);
   const height = parseInt(req.query.height as string);
@@ -18,9 +21,6 @@ imgRouter.get("/", validate, async (req, res) => {
     const image = await fs.readFile(
       path.join(__dirname, `../../../assets/thumb/${filename}_thumb.jpg`)
     );
-
-    // store the processed image in cache
-    requestCache.set(`${filename}_${width}_${height}`, image);
 
     // send the image as response
     res.setHeader("Content-Type", "image/jpeg");

@@ -1,9 +1,7 @@
 import express from "express";
-import { promises as fs } from "fs";
+import fs from "fs";
 import path from "path";
-
-// to store previous requests
-const requestCache = new Map();
+import fileExist from "../utilities/fileExist";
 
 /**
  * to validate the request and check if the image is already processed
@@ -27,22 +25,18 @@ const validate = async (
     return;
   }
 
+  const imagePath = path.join(__dirname, `../../assets/full/${filename}.jpg`);
+
   // check if file exists
-  try {
-    const image = await fs.readFile(
-      path.join(__dirname, `../../assets/full/${filename}.jpg`)
-    );
-    // if width and height are not provided, serve the original image
+  if (!(await fileExist(imagePath))) {
+    res.status(404).send("<h1>No such file or directory</h1>");
+    return;
+  } else {
     if (!width && !height) {
       res.contentType("image/jpg");
-      res.status(200).send(image);
+      res.status(200).sendFile(imagePath);
       return;
     }
-  } catch (err) {
-    res
-      .status(404)
-      .send(`<h1>No such file or directory</h1>${(err as Error).message}`);
-    return;
   }
 
   // check if width and height are valid
@@ -55,14 +49,7 @@ const validate = async (
     return;
   }
 
-  // check if image is already processed and stored in cache
-  const key = `${filename}_${width}_${height}`;
-  if (requestCache.has(key)) {
-    res.status(200).send(requestCache.get(key));
-    return;
-  }
-
   next();
 };
 
-export { validate, requestCache };
+export default validate;
