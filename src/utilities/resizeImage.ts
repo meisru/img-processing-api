@@ -12,11 +12,14 @@ const resizeImage = async (
   width: number,
   height: number
 ): Promise<string> => {
+  const outputPath = `assets/thumb/${filename}_${width}_${height}.jpg`;
+
   try {
     await sharp(`assets/full/${filename}.jpg`)
       .resize(width, height)
-      .toFile(`assets/thumb/${filename}_${width}_${height}.jpg`);
-    return "Image resized successfully";
+      .toFile(outputPath);
+
+    return outputPath; // ✅ Return the actual file path instead of a message
   } catch (err) {
     throw new Error(`Error resizing image: ${(err as Error).message}`);
   }

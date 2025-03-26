@@ -16,12 +16,11 @@ const caching = (
     `../../assets/thumb/${filename}_${width}_${height}.jpg`
   );
   // check if file exists
-  if (!fileExist(imagePath)) {
+  if (fileExist(imagePath)) {
+    res.status(200).sendFile(imagePath);
+  } else {
     next();
-    return;
   }
-  res.contentType("image/jpg");
-  res.status(200).sendFile(imagePath);
 };
 
 export default caching;

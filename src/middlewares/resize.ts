@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import resizeImage from "../utilities/resizeImage";
+import { cache } from "sharp";
 
 const resize = async (
   req: express.Request,
@@ -10,16 +11,14 @@ const resize = async (
   const width = parseInt(req.query.width as string);
   const height = parseInt(req.query.height as string);
 
-  // resize the image
   try {
-    await resizeImage(filename, width, height);
-    const imagePath = path.join(
-      __dirname,
-      `../../../assets/thumb/${filename}_${width}_${height}.jpg`
-    );
-    // send the image as response
+    // Wait for the image to be resized and get the file path
+    const imagePath = await resizeImage(filename, width, height);
+    const cachePath = path.join(__dirname, "..", "..", imagePath);
+
+    // Now that the image exists, send it
     res.setHeader("Content-Type", "image/jpeg");
-    res.status(200).sendFile(imagePath);
+    res.status(200).sendFile(cachePath);
   } catch (err) {
     res.status(500).send(`Error processing image: ${(err as Error).message}`);
   }
