@@ -11,11 +11,9 @@ const resize = async (
   const height = parseInt(req.query.height as string);
 
   try {
-    // Wait for the image to be resized and get the file path
     const imagePath = await resizeImage(filename, width, height);
     const cachePath = path.join(__dirname, "..", "..", imagePath);
 
-    // Now that the image exists, send it
     res.setHeader("Content-Type", "image/jpeg");
     res.status(200).sendFile(cachePath);
   } catch (err) {

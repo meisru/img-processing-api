@@ -5,7 +5,7 @@ import sharp from "sharp";
  * @param {string}  filename - The filename of the image
  * @param {number}  width - The width of the image
  * @param {number}  height - The height of the image
- * @returns {Promise<string>} - The result of the image processing
+ * @returns {Promise<string>} - The path to the processed image
  */
 const resizeImage = async (
   filename: string,
@@ -19,7 +19,7 @@ const resizeImage = async (
       .resize(width, height)
       .toFile(outputPath);
 
-    return outputPath; // ✅ Return the actual file path instead of a message
+    return outputPath;
   } catch (err) {
     throw new Error(`Error resizing image: ${(err as Error).message}`);
   }
