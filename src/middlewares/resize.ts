@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import resizeImage from "../utilities/resizeImage";
-import { cache } from "sharp";
 
 const resize = async (
   req: express.Request,

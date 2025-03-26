@@ -10,6 +10,7 @@ const fileExist = (imagePath: string): boolean => {
     fs.accessSync(imagePath);
     return true;
   } catch (err) {
+    console.error(err);
     return false;
   }
 };

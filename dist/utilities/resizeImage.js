@@ -48,21 +48,24 @@ var sharp_1 = __importDefault(require("sharp"));
  * @returns {Promise<string>} - The result of the image processing
  */
 var resizeImage = function (filename, width, height) { return __awaiter(void 0, void 0, void 0, function () {
-    var err_1;
+    var outputPath, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                outputPath = "assets/thumb/".concat(filename, "_").concat(width, "_").concat(height, ".jpg");
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, (0, sharp_1.default)("assets/full/".concat(filename, ".jpg"))
                         .resize(width, height)
-                        .toFile("assets/thumb/".concat(filename, "_thumb.jpg"))];
-            case 1:
-                _a.sent();
-                return [2 /*return*/, "Image resized successfully"];
+                        .toFile(outputPath)];
             case 2:
+                _a.sent();
+                return [2 /*return*/, outputPath]; // ✅ Return the actual file path instead of a message
+            case 3:
                 err_1 = _a.sent();
                 throw new Error("Error resizing image: ".concat(err_1.message));
-            case 3: return [2 /*return*/];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

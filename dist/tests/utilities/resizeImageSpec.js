@@ -49,7 +49,7 @@ describe("image resize function", function () {
                     case 0: return [4 /*yield*/, (0, resizeImage_1.default)("santamonica", 100, 100)];
                     case 1:
                         result = _a.sent();
-                        expect(result).toBe("Image resized successfully");
+                        expect(result).toBe("assets/thumb/santamonica_100_100.jpg");
                         return [2 /*return*/];
                 }
             });
