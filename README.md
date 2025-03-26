@@ -23,7 +23,7 @@ The server runs on port 3000.
 
 #### - Endpoint to resize images:
 
-`http://localhost:3000/api/image`
+`http://localhost:3000/api/images`
 
 Query parameters needed:
 
@@ -43,15 +43,15 @@ will return api instructions
 
 #### Example 2:
 
-`http://localhost:3000/api/image`\
+`http://localhost:3000/api/images`\
 will ask for a filename to be provided
 
 #### Example 3:
 
-`http://localhost:3000/api/image?filename=santamonica`\
+`http://localhost:3000/api/images?filename=santamonica`\
 will return the image with the original dimensions
 
 #### Example 4:
 
-`http://localhost:3000/api/image?filename=santamonica&width=200&height=200`\
+`http://localhost:3000/api/images?filename=santamonica&width=200&height=200`\
 will return the image with the dimensions 200x200

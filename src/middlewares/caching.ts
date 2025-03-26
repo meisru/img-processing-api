@@ -2,21 +2,21 @@ import express from "express";
 import path from "path";
 import fileExist from "../utilities/fileExist";
 
-const caching = async (
+const caching = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): void => {
   const filename = req.query.filename as string;
   const width = parseInt(req.query.width as string);
   const height = parseInt(req.query.height as string);
 
   const imagePath = path.join(
     __dirname,
-    `../../assets/thumb/${filename}_thumb.jpg`
+    `../../assets/thumb/${filename}_${width}_${height}.jpg`
   );
   // check if file exists
-  if (!(await fileExist(imagePath))) {
+  if (!fileExist(imagePath)) {
     next();
     return;
   }

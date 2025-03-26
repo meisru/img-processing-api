@@ -10,11 +10,11 @@ import fileExist from "../utilities/fileExist";
  * @param next
  * @returns  {void}
  */
-const validate = async (
+const validate = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {
+): void => {
   const filename = req.query.filename as string;
   const width = parseInt(req.query.width as string);
   const height = parseInt(req.query.height as string);
@@ -28,7 +28,7 @@ const validate = async (
   const imagePath = path.join(__dirname, `../../assets/full/${filename}.jpg`);
 
   // check if file exists
-  if (!(await fileExist(imagePath))) {
+  if (!fileExist(imagePath)) {
     res.status(404).send("<h1>No such file or directory</h1>");
     return;
   } else {

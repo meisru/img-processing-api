@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import apiRouter from "./routes/index";
 
 const app = express();
@@ -8,7 +8,7 @@ app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.send('<h1><a href="/api">View the project</a><h1>');
 });
 

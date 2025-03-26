@@ -1,7 +1,11 @@
 import fs from "fs";
 
-// utility function to check if a file exists
-const fileExist = async (imagePath: string) => {
+/**
+ * Check if a file exists
+ * @param {string} imagePath - The path to the image file
+ * @returns {boolean} - True if the file exists, false otherwise
+ */
+const fileExist = (imagePath: string): boolean => {
   try {
     fs.accessSync(imagePath);
     return true;

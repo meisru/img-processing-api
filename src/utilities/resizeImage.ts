@@ -7,11 +7,15 @@ import sharp from "sharp";
  * @param {number}  height - The height of the image
  * @returns {Promise<string>} - The result of the image processing
  */
-const resizeImage = async (filename: string, width: number, height: number) => {
+const resizeImage = async (
+  filename: string,
+  width: number,
+  height: number
+): Promise<string> => {
   try {
     await sharp(`assets/full/${filename}.jpg`)
       .resize(width, height)
-      .toFile(`assets/thumb/${filename}_thumb.jpg`);
+      .toFile(`assets/thumb/${filename}_${width}_${height}.jpg`);
     return "Image resized successfully";
   } catch (err) {
     throw new Error(`Error resizing image: ${(err as Error).message}`);
